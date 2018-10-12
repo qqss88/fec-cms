@@ -106,7 +106,6 @@ def legal_doc_search_mur(request):
     offset = request.GET.get('offset', 0)
     mur_no = request.GET.get('case_no', '')
     mur_respondents = request.GET.get('case_respondents', '')
-    mur_election_cycles = request.GET.get('case_election_cycles', '')
 
     results = api_caller.load_legal_search_results(query, 'murs', offset=offset, case_no=mur_no, case_respondents=mur_respondents)
 
