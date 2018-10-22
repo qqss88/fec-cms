@@ -1,6 +1,18 @@
 {% load wagtailcore_tags %}
 <section class="slab slab--neutral slab--inline" >
+    <!-- <h2>Alert Messages</h2>
+
+<p>Click on the "x" symbol to close the alert message.</p>
+    {% if error %}
+<div class="alert">
+
+  <!-- <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>  -->
+  <!-- <strong>{{error}}</strong> Please check with usajobs.gov for details.
+</div>
+    {% endif %} --> -->
+
   <div class="container">
+
   <ul>
   {% for j in jobData %}
       <li>
@@ -12,7 +24,13 @@
         </ul>
       </li>
   {% empty %}
-    <li class='t-sans'>There are currently no open positions available. Please check back on this page or on <a href='https://www.usajobs.gov/' title='USAJobs website'>USAJOBs</a> for the latest FEC vacancy announcements.</li>
+    {% if error %}
+        <div class="alert">
+            <strong>{{error}}</strong> Please check with usajobs.gov for details.
+        </div>
+    {% else %}
+        <li class='t-sans'>There are currently no open positions available. Please check back on this page or on <a href='https://www.usajobs.gov/' title='USAJobs website'>USAJOBs</a> for the latest FEC vacancy announcements.</li>
+    {% endif %}
   {% endfor %}
  </ul>
   </div>

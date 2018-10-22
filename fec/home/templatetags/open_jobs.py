@@ -4,7 +4,8 @@ import requests
 from django import template
 from django.conf import settings
 
-
+USAJOB_SEARCH_ERROR = "Error: https://data.usajobs.gov/api/Search is not accessible at this moment."
+USAJOB_CODELIST_ACCESS_ERROR = "Error: https://data.usajobs.gov/api/codelist/hiringpaths is not accessible at this moment"
 register = template.Library()
 
 @register.inclusion_tag('partials/jobs.html')
@@ -27,12 +28,16 @@ def get_jobs():
         headers=headers,
         params=querystring
     )
+    if response.status_code != 200:
+        return {'error': USAJOB_SEARCH_ERROR}
 
     #query usajobs API for list of all hiring-path codes
     codes_response = requests.get(
         codes_url,
         headers=headers
     )
+    if codes_response.status_code != 200:
+        return {'error': USAJOB_CODELIST_ACCESS_ERROR}
 
     responses = response.json()
     codes_responses = codes_response.json()
